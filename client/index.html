@@ -1,0 +1,117 @@
+<html>
+
+<head>
+    <title>The jobber</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!--Main Navigation-->
+    <header class="mb-4 pb-4">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-lime scrolling-navbar">
+            <a class="navbar-brand" href="/"><strong>The Jobber</strong></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Jobs</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!--Main Navigation-->
+    <div class="container mt-4 pt-4">
+
+        <div id="app">
+            <div class="row justify-content-around">
+                <div class="col-md-3" v-for="(job,index) in jobs" v-bind:key="job.id">
+                    <div class="card m-1 shadow-sm rounded-pill">
+                        <img :src="'http://localhost:4100' + job.cover_picture" class="card-img-top p-4 pb-2 border-danger rounded-pill" alt="...">
+                        <div class="card-body text-center">
+                            <p>
+                                <button class="btn p-3 rounded-pill shadow" @click="initJobView(job)" type="submit">View</button>
+                            </p>
+                            <p class="card-text">{{job.title}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" tabindex="-1" id="JobModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content bg-white shadow " v-if="current_job">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{current_job.title}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        </div>
+                        <div class="modal-body text-center shadow-sm">
+                            <div class="text-center">
+                                <img :src="'http://localhost:4100' + current_job.cover_picture" class="img-thumbnail rounded-pill rounded-sm  mx-auto d-block" alt="...">
+                            </div>
+                            <p>{{current_job.description}}</p>
+                            <p>{{current_job.created_at}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn shadow" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn shadow">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <script type="text/javascript" src="js/axios.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <script type="text/javascript">
+        window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                jobs: [],
+                current_job: {}
+            },
+            methods: {
+                get_jobs: function() {
+                    axios.get("http://localhost:4100/jobs").then((response) => {
+                        this.$nextTick(() => {
+                            this.jobs = response.data
+                        })
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                },
+                initJobView: function(job_arg) {
+                    this.$nextTick(() => {
+                        this.current_job = job_arg;
+                    })
+                    $('#JobModal').modal()
+                }
+            },
+            mounted() {
+
+            },
+            created() {
+                this.get_jobs()
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<html>
+
+<head>
+    <title>The jobber</title>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- Font Awesome -->
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
+<!-- Bootstrap core CSS -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- Material Design Bootstrap -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/fontawesome.min.css">
+<style type="text/css">
+    .bg-blue{
+        background: #2222d6;
+    }
+</style>
+</head>
+
+<body>
+    <!--Main Navigation-->
+<header>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-blue scrolling-navbar">
+    <a class="navbar-brand" href="#"><strong>The Jobber</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Jobs</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a class="nav-link"><i class="fa fa-facebook"></i></a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<!--Main Navigation-->
+    <div class="mt-4">
+      <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Search</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Type to Search"/>
+  </div>
+  </form>        
+    </div>
+
+    <div>
+      <div id="app">
+        <div class="h3 text-center">Most Recent Jobs</div>
+        <div class="row justify-content-center">
+          <div class="card col-md-5 mr-auto ml-auto mb-3" style="max-width: 540px;" v-for="(job,index) in jobs" :key="job._id" v-if="index < 2">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img :src="job.cover_picture" class="card-img img-fluid img-responsive" :alt="job.title">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title" v-text="job.title"></h5>
+       <p class="card-text" v-html="'Description : '+ job.description"></p>
+    <p class="card-text" v-html="'Country : '+ job.country"></p>
+    <p class="card-text" v-html="'Specialization : '+ job.specialization"></p>
+    <p class="card-text" v-html="'Location : '+ job.location"></p>
+    <p class="card-text" v-html="'Salary : '+ job.currency + job.salary"></p>
+    <p class="card-text" >
+      <small class="text-muted" v-html="'Date Posted : '+ job.created_at"></small>
+    </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+
+          <div class="h3 text-center">Other Jobs</div>
+          <div class="row justify-content-center">
+              <div class="col-md-3 mb-3 mt-2" v-for="(job,index) in jobs" :key="job._id" v-if="index >= 3">
+                <div class="card" style="width: 18rem;">
+  <img :src="job.cover_picture" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title" v-text="job.title"></h5>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item"><p class="card-text" v-html="'Description : '+ job.description"></p>
+    </li>
+    
+    <li class="list-group-item"><p class="card-text" v-html="'Country : '+ job.country"></p></li>
+    <li class="list-group-item"><p class="card-text" v-html="'Specialization : '+ job.specialization"></p></li>
+    <li class="list-group-item"><p class="card-text" v-html="'Location : '+ job.location"></p></li>
+    <li class="list-group-item"><p class="card-text" v-html="'Salary : '+ job.currency + job.salary"></p></li>
+    <li class="list-group-item"><p class="card-text" v-html="'Date Posted : '+ job.created_at"></p></li>
+    </ul>
+    <div class="text-center">
+      <a :href="'#'+job._id" class="btn btn-primary">view</a>
+    </div>
+  </div>
+  
+</div>
+              </div>
+          </div>
+      </div>
+
+        <div class="row justify-content-center">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+              <!--Section: Live preview-->
+              <section class="pr-1">
+                <!-- Material form register -->
+                <div class="card">
+                  <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Sign up</strong>
+                  </h5>
+                  <!--Card content-->
+                  <div class="card-body px-lg-5 pt-0">
+        
+                    <!-- Form -->
+                    <form class="text-center" method="POST" action="/register" enctype="multipart/form-data" >
+        
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="md-form">
+                              <input type="text" name="name" placeholder="name" value="Ama" class="form-control" autocomplete />
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="md-form">
+                              <input type="email" name="email" placeholder="email" value="email" class="form-control" autocomplete/>
+                          </div>
+                        </div>
+                      </div>
+        
+                    
+                      <div class="md-form mt-0">
+                          <input type="text" name="phone" placeholder="phone" value="+233259435529" autocomplete />
+                      </div>
+        
+                      <div class="md-form">
+                          <input type="text" name="country" placeholder="country" value="Ghana" class="form-control" autocomplete> 
+                      </div>
+        
+                      <div class="md-form">
+                        <input type="text" name="location" placeholder="location" value="Accra,Ghana" autocomplete />
+                      </div>
+        
+                      <div class="md-form">
+                        <input type="text" name="specialization" placeholder="specialization" value="Software" class="form-control" autocomplete />
+                      </div>
+
+
+                      <div class="md-form">
+                        <input type="date" name="date_of_birth" placeholder="date_of_birth" class="form-control" autocomplete />
+                      </div>
+
+                      <div class="md-form">
+                        <input type="password" name="password" placeholder="password" class="form-control" autocomplete />
+                      </div>
+           
+                      <div class="md-form">
+                         <input type="file" name="avatar" accept="image/*" class="form-control">
+                      </div>
+               
+                      <button class="btn btn-outline-info rounded-3 btn-rounded btn-block my-4 waves-effect z-depth-1" type="submit">Register</button>
+                      <hr/>
+        
+                      <!-- Terms of service -->
+                      <p>By clicking
+                        <em>Sign up</em> you agree to our
+                        <a href="" target="_blank">terms of service</a>
+        
+                    </p></form>
+                    <!-- Form -->
+        
+                  </div>
+        
+                </div>
+                <!-- Material form register -->
+        
+              </section>
+              <!--Section: Live preview-->
+        
+            </div>
+            <!--Grid column-->
+        
+        <!--Grid column-->
+            <div class="col-md-6 mb-4">
+              <!--Section: Live preview-->
+              <section class="pr-1">
+                <!-- Material form register -->
+                <div class="card">
+                  <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Sign in</strong>
+                  </h5>
+                  <!--Card content-->
+                  <div class="card-body px-lg-5 pt-0">
+        
+                    <!-- Form -->
+                    <form class="text-center " method="POST" action="/login" enctype="application/x-www-form-urlencoded" >
+        
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="md-form">
+              <input type="email" name="email" placeholder="email" value="1579443546547ama@gmail.com" class="form-control" autocomplete />
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="md-form">
+                              <input type="password" name="password" placeholder="password" class="form-control" autocomplete/>
+                          </div>
+                        </div>
+
+                      <button class="btn btn-outline-info rounded-3 btn-rounded btn-block my-4 waves-effect z-depth-1" type="submit">Sign In</button>
+                      <hr/>
+                      </div>
+        
+                  </form>
+                    <!-- Form -->
+        
+                  </div>
+        
+                </div>
+                <!-- Material form register -->
+        
+              </section>
+              <!--Section: Live preview-->
+        
+            </div>
+            <!--Grid column-->
+        </div>
+    </div>
+    <!-- JQuery -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- Bootstrap tooltips -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script> -->
+<!-- Bootstrap core JavaScript -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+<!-- MDB core JavaScript -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script> -->
+
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script> -->
+
+    <script type="text/javascript" src="javascripts/axios.js"></script>
+    <script type="text/javascript" src="javascripts/vue.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+  el: '#app',
+  data: {
+      jobs:[]
+  },
+  methods:{
+   get_jobs:function(){
+    axios.get("/jobs").then((response)=>{
+      this.$nextTick(()=>{
+      this.jobs = response.data  
+      })
+    })
+  }
+},
+  mounted(){
+
+  },
+  created(){
+this.get_jobs()
+  }
+})
+</script>
+</body>
+
+</html>
